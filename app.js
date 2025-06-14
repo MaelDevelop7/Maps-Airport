@@ -1,67 +1,69 @@
-// Carte globale centrée par défaut sur Madrid (en cas d'échec géoloc)
+// Coordonnées par défaut sur Madrid
 const defaultCoords = [40.4168, -3.7038];
 const defaultZoom = 5;
 
+// Création de la carte globale
 const globalMap = L.map("map").setView(defaultCoords, defaultZoom);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: '&copy; OpenStreetMap contributors',
 }).addTo(globalMap);
 
-// Marqueur Madrid (optionnel)
+// Marqueur optionnel Madrid
 const madridMarker = L.marker([40.4959, -3.5676]).addTo(globalMap);
 madridMarker.bindPopup("Madrid Airport (MAD)");
 
-// Création de l'icône rouge personnalisée pour la position utilisateur
+// Icône rouge pour l'utilisateur
 const redIcon = L.divIcon({
-  html: `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41" >
+  html: `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41">
            <path fill="red" stroke="black" stroke-width="2" d="M12.5 0C7 0 3 4.5 3 10c0 7.5 9.5 30 9.5 30s9.5-22.5 9.5-30c0-5.5-4-10-9.5-10z"/>
            <circle fill="white" cx="12.5" cy="10" r="5"/>
          </svg>`,
-  className: '', // enlever styles par défaut
+  className: '',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
 });
 
-// Essayer la géolocalisation
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const userCoords = [position.coords.latitude, position.coords.longitude];
-      globalMap.setView(userCoords, 12); // zoom plus proche
-      // Marqueur de la position de l'utilisateur avec icône rouge
-      const userMarker = L.marker(userCoords, { icon: redIcon }).addTo(globalMap);
-      userMarker.bindPopup("Vous êtes ici").openPopup();
-    },
-    (error) => {
-      console.warn("Géolocalisation refusée ou erreur, position par défaut Madrid.");
-      // on reste sur la position par défaut
-    }
-  );
-} else {
-  console.warn("Géolocalisation non supportée par ce navigateur.");
-}
+// Bouton Relocalize
+document.getElementById("recenterMap").addEventListener("click", (e) => {
+  e.preventDefault();
 
-// Dimensions plan Madrid (adapter si besoin)
-const imageWidth = 1962;
-const imageHeight = 1652;
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const userCoords = [position.coords.latitude, position.coords.longitude];
+        globalMap.setView(userCoords, 12);
+        const userMarker = L.marker(userCoords, { icon: redIcon }).addTo(globalMap);
+        userMarker.bindPopup("Vous êtes ici").openPopup();
+      },
+      (error) => {
+        console.warn("Géolocalisation échouée, position par défaut.");
+      }
+    );
+  } else {
+    console.warn("Géolocalisation non supportée.");
+  }
+});
 
-let planMap;
+// Carte plan aéroport
+let planMap = null;
 
-// Fonction pour afficher le plan de Madrid
 function showMadridPlan() {
-  // Masquer carte globale et menu
+  // Masquer carte globale
   document.getElementById("map").style.display = "none";
   document.getElementById("menu").style.display = "none";
 
-  // Afficher la div plan
+  // Afficher le plan
   const planDiv = document.getElementById("airportPlan");
   planDiv.style.display = "block";
 
-  // Détruire ancienne carte plan si existante
+  // Supprimer l'ancienne carte
   if (planMap) {
     planMap.remove();
   }
+
+  const imageWidth = 1962;
+  const imageHeight = 1652;
 
   planMap = L.map("airportPlanMap", {
     crs: L.CRS.Simple,
@@ -69,31 +71,23 @@ function showMadridPlan() {
     maxZoom: 4,
   });
 
-  const bounds = [
-    [0, 0],
-    [imageHeight, imageWidth],
-  ];
-
-  // Image du plan - veille à avoir ce fichier au bon endroit
+  const bounds = [[0, 0], [imageHeight, imageWidth]];
   L.imageOverlay("mad.png", bounds).addTo(planMap);
   planMap.fitBounds(bounds);
 
-  // Charger zones et afficher des marqueurs au centre
   fetch("MAD.json")
-    .then((res) => res.json())
-    .then((zones) => {
-      zones.forEach((zone) => {
-        // Calcul du centre de la zone
+    .then(res => res.json())
+    .then(zones => {
+      zones.forEach(zone => {
         const centerY = zone.y + zone.height / 2;
         const centerX = zone.x + zone.width / 2;
-
-        // Créer un marqueur simple (icône par défaut)
         const marker = L.marker([centerY, centerX]).addTo(planMap);
         marker.bindPopup(zone.label);
       });
     });
 }
 
+// Bouton pour ouvrir le plan
 document.getElementById("openMadrid").addEventListener("click", (e) => {
   e.preventDefault();
   showMadridPlan();
