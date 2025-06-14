@@ -1,109 +1,202 @@
-// Carte globale centrée par défaut sur Madrid (en cas d'échec géoloc)
-const defaultCoords = [40.4168, -3.7038];
-const defaultZoom = 5;
-
-const globalMap = L.map("map").setView(defaultCoords, defaultZoom);
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-  attribution: '&copy; OpenStreetMap contributors',
-}).addTo(globalMap);
-
-// Marqueur Madrid (optionnel)
-const madridMarker = L.marker([40.4959, -3.5676]).addTo(globalMap);
-madridMarker.bindPopup("Madrid Airport (MAD)");
-
-// Création de l'icône rouge personnalisée pour la position utilisateur
-const redIcon = L.divIcon({
-  html: `<svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41" >
-           <path fill="red" stroke="black" stroke-width="2" d="M12.5 0C7 0 3 4.5 3 10c0 7.5 9.5 30 9.5 30s9.5-22.5 9.5-30c0-5.5-4-10-9.5-10z"/>
-           <circle fill="white" cx="12.5" cy="10" r="5"/>
-         </svg>`,
-  className: '',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-});
-
-// Essayer la géolocalisation
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const userCoords = [position.coords.latitude, position.coords.longitude];
-      globalMap.setView(userCoords, 12); // zoom plus proche
-      const userMarker = L.marker(userCoords, { icon: redIcon }).addTo(globalMap);
-      userMarker.bindPopup("Vous êtes ici").openPopup();
-    },
-    (error) => {
-      console.warn("Géolocalisation refusée ou erreur, position par défaut Madrid.");
-    }
-  );
-} else {
-  console.warn("Géolocalisation non supportée par ce navigateur.");
-}
-
-// Dimensions plan Madrid (adapter si besoin)
-const imageWidth = 1962;
-const imageHeight = 1652;
-
-let planMap;
-
-// Définition icône aéroport personnalisée
-const airportIcon = L.icon({
-  iconUrl: 'airport-icon.png', // <-- remplace par le chemin réel vers ton icône
-  iconSize: [32, 37],
-  iconAnchor: [16, 37],
-  popupAnchor: [0, -30],
-});
-
-// Fonction pour afficher le plan de Madrid
-function showMadridPlan() {
-  document.getElementById("map").style.display = "none";
-  document.getElementById("menu").style.display = "none";
-
-  const planDiv = document.getElementById("airportPlan");
-  planDiv.style.display = "block";
-
-  if (planMap) {
-    planMap.remove();
+[
+  {
+    "id": "zone1",
+    "x": 203,
+    "y": 51,
+    "width": 37,
+    "height": 40,
+    "label": "Metro and Train stop T4"
+  },
+  {
+    "id": "zone2",
+    "x": 247,
+    "y": 58,
+    "width": 42,
+    "height": 38,
+    "label": "Food T4 S"
+  },
+  {
+    "id": "zone3",
+    "x": 233,
+    "y": 274,
+    "width": 41,
+    "height": 42,
+    "label": "Train and metro T4"
+  },
+  {
+    "id": "zone4",
+    "x": 213,
+    "y": 335,
+    "width": 40,
+    "height": 32,
+    "label": "Security check T4"
+  },
+  {
+    "id": "zone5",
+    "x": 260,
+    "y": 335,
+    "width": 43,
+    "height": 31,
+    "label": "Food T4"
+  },
+  {
+    "id": "zone6",
+    "x": 184,
+    "y": 386,
+    "width": 164,
+    "height": 41,
+    "label": "Entrance T4"
+  },
+  {
+    "id": "zone7",
+    "x": 34,
+    "y": 353,
+    "width": 38,
+    "height": 39,
+    "label": "Parking T4"
+  },
+  {
+    "id": "zone8",
+    "x": 222,
+    "y": 677,
+    "width": 42,
+    "height": 38,
+    "label": "Security check T3"
+  },
+  {
+    "id": "zone9",
+    "x": 289,
+    "y": 798,
+    "width": 45,
+    "height": 40,
+    "label": "Parking T3"
+  },
+  {
+    "id": "zone10",
+    "x": 274,
+    "y": 662,
+    "width": 42,
+    "height": 40,
+    "label": "Bus Stop T3"
+  },
+  {
+    "id": "zone11",
+    "x": 222,
+    "y": 631,
+    "width": 43,
+    "height": 40,
+    "label": "Food T3"
+  },
+  {
+    "id": "zone12",
+    "x": 420,
+    "y": 531,
+    "width": 44,
+    "height": 43,
+    "label": "Security check T2"
+  },
+  {
+    "id": "zone13",
+    "x": 397,
+    "y": 577,
+    "width": 95,
+    "height": 39,
+    "label": "Transportation T2"
+  },
+  {
+    "id": "zone14",
+    "x": 397,
+    "y": 623,
+    "width": 116,
+    "height": 39,
+    "label": "Entrance T2"
+  },
+  {
+    "id": "zone15",
+    "x": 577,
+    "y": 555,
+    "width": 41,
+    "height": 36,
+    "label": "Food T2"
+  },
+  {
+    "id": "zone16",
+    "x": 430,
+    "y": 737,
+    "width": 161,
+    "height": 34,
+    "label": "Parking T2"
+  },
+  {
+    "id": "zone17",
+    "x": 675,
+    "y": 647,
+    "width": 42,
+    "height": 38,
+    "label": "Car renting"
+  },
+  {
+    "id": "zone18",
+    "x": 753,
+    "y": 669,
+    "width": 117,
+    "height": 38,
+    "label": "Entrance T1"
+  },
+  {
+    "id": "zone19",
+    "x": 758,
+    "y": 627,
+    "width": 41,
+    "height": 36,
+    "label": "Bus stop T1"
+  },
+  {
+    "id": "zone20",
+    "x": 718,
+    "y": 567,
+    "width": 40,
+    "height": 41,
+    "label": "Security check T1"
+  },
+  {
+    "id": "zone21",
+    "x": 793,
+    "y": 577,
+    "width": 41,
+    "height": 41,
+    "label": "Food 1 T1"
+  },
+  {
+    "id": "zone22",
+    "x": 734,
+    "y": 731,
+    "width": 42,
+    "height": 40,
+    "label": "Parking 2 T1"
+  },
+  {
+    "id": "zone23",
+    "x": 869,
+    "y": 886,
+    "width": 163,
+    "height": 41,
+    "label": "Main T1 Entrance"
+  },
+  {
+    "id": "zone24",
+    "x": 1035,
+    "y": 887,
+    "width": 42,
+    "height": 40,
+    "label": "Security check T1"
+  },
+  {
+    "id": "zone25",
+    "x": 1036,
+    "y": 929,
+    "width": 41,
+    "height": 40,
+    "label": "Main Parking T1"
   }
-
-  planMap = L.map("airportPlanMap", {
-    crs: L.CRS.Simple,
-    minZoom: -1,
-    maxZoom: 4,
-  });
-
-  const bounds = [
-    [0, 0],
-    [imageHeight, imageWidth],
-  ];
-
-  L.imageOverlay("mad.png", bounds).addTo(planMap);
-  planMap.fitBounds(bounds);
-
-  fetch("MAD.json")
-    .then((res) => res.json())
-    .then((zones) => {
-      zones.forEach((zone) => {
-        const centerY = zone.y + zone.height / 2;
-        const centerX = zone.x + zone.width / 2;
-
-        const marker = L.marker([centerY, centerX], { icon: airportIcon }).addTo(planMap);
-        marker.bindPopup(zone.label);
-      });
-    });
-}
-
-document.getElementById("openMadrid").addEventListener("click", (e) => {
-  e.preventDefault();
-  showMadridPlan();
-});
-
-document.getElementById("backBtn").addEventListener("click", () => {
-  if (planMap) {
-    planMap.remove();
-    planMap = null;
-  }
-  document.getElementById("airportPlan").style.display = "none";
-  document.getElementById("map").style.display = "block";
-  document.getElementById("menu").style.display = "block";
-});
+]
