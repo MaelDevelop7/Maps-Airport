@@ -1,14 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maps Airport</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Maps Airport</title>
+  <link rel="stylesheet" href="style.css" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"
+  />
 </head>
 <body>
-    <div class="menu" id="menu">
-        <a href="madrid.html">Madrid Airport (MAD)</a>
-    </div>
-    
+  <div id="map"></div>
+
+  <div class="menu" id="menu">
+    <a href="#" id="openMadrid">Madrid Airport (MAD)</a>
+  </div>
+
+  <div id="airportPlan">
+    <button id="backBtn">Retour</button>
+    <div id="airportPlanMap"></div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+  <script src="dev.js"></script>
 </body>
 </html>
