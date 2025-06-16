@@ -1,66 +1,64 @@
-// Entrer dans l'app : afficher la carte et le menu, cacher l'écran d'accueil
+// --- Gestion des vues et thème ---
+
+// Bouton "Entrer"
 document.getElementById("enterBtn").addEventListener("click", () => {
   document.getElementById("homeScreen").style.display = "none";
   document.getElementById("map").style.display = "block";
   document.getElementById("menu").style.display = "block";
 });
 
-// Ouvrir les réglages
+// Bouton ouvrir réglages
 document.getElementById("settingsBtn").addEventListener("click", () => {
   document.getElementById("settingsMenu").style.display = "flex";
 });
 
-// Fermer les réglages
+// Bouton fermer réglages
 document.getElementById("closeSettings").addEventListener("click", () => {
   document.getElementById("settingsMenu").style.display = "none";
 });
 
-// Gestion du thème au chargement et changement
+// Gestion du thème
 window.addEventListener("DOMContentLoaded", () => {
   const themeSelector = document.getElementById("themeSelector");
-
-  // Charger la valeur stockée ou par défaut "auto"
   const savedTheme = localStorage.getItem("theme") || "auto";
   themeSelector.value = savedTheme;
   applyTheme(savedTheme);
 
   themeSelector.addEventListener("change", (e) => {
-    const selectedTheme = e.target.value;
-    localStorage.setItem("theme", selectedTheme);
-    applyTheme(selectedTheme);
+    const theme = e.target.value;
+    localStorage.setItem("theme", theme);
+    applyTheme(theme);
   });
 });
 
 function applyTheme(theme) {
   document.documentElement.classList.remove("dark-mode", "light-mode");
-
   if (theme === "dark") {
     document.documentElement.classList.add("dark-mode");
   } else if (theme === "light") {
     document.documentElement.classList.add("light-mode");
-  } else if (theme === "auto") {
+  } else {
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    if (prefersDark) {
-      document.documentElement.classList.add("dark-mode");
-    } else {
-      document.documentElement.classList.add("light-mode");
-    }
+    document.documentElement.classList.add(prefersDark ? "dark-mode" : "light-mode");
   }
 }
 
-// Coordonnées et zoom par défaut pour Madrid
-const defaultCoords = [40.4168, -3.7038];
+// --- Carte globale ---
+
+const defaultCoords = [40.4168, -3.7038]; // Madrid
 const defaultZoom = 5;
 
-// Initialisation carte globale
 const globalMap = L.map("map").setView(defaultCoords, defaultZoom);
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: '&copy; OpenStreetMap contributors',
 }).addTo(globalMap);
 
-// Marqueur aéroport Madrid
+// Marqueurs aéroports
 const madridMarker = L.marker([40.4959, -3.5676]).addTo(globalMap);
-madridMarker.bindPopup("Madrid Airport (MAD)");
+const parisMarker = L.marker([49.0097, 2.5479]).addTo(globalMap);
+
+madridMarker.bindPopup('<a href="#" class="openAirport" data-airport="mad">Madrid Airport (MAD)</a>');
+parisMarker.bindPopup('<a href="#" class="openAirport" data-airport="cdg">Paris CDG Airport (CDG)</a>');
 
 // Icône rouge utilisateur
 const redIcon = L.divIcon({
@@ -74,45 +72,41 @@ const redIcon = L.divIcon({
   popupAnchor: [1, -34],
 });
 
-// Bouton recentrer la carte sur la position utilisateur
+// Bouton recentrer sur position utilisateur
 document.getElementById("recenterMap").addEventListener("click", (e) => {
   e.preventDefault();
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const userCoords = [position.coords.latitude, position.coords.longitude];
-        globalMap.setView(userCoords, 12);
-        const userMarker = L.marker(userCoords, { icon: redIcon }).addTo(globalMap);
-        userMarker.bindPopup("Vous êtes ici").openPopup();
+      (pos) => {
+        const coords = [pos.coords.latitude, pos.coords.longitude];
+        globalMap.setView(coords, 12);
+        L.marker(coords, { icon: redIcon }).addTo(globalMap).bindPopup("Vous êtes ici").openPopup();
       },
-      () => {
-        console.warn("Géolocalisation échouée, position par défaut.");
-      }
+      () => console.warn("Géolocalisation échouée")
     );
   } else {
-    console.warn("Géolocalisation non supportée.");
+    console.warn("Géolocalisation non supportée");
   }
 });
 
-// Carte plan aéroport (initialement null)
-let planMap = null;
+// --- Carte plan aéroport ---
 
-function showMadridPlan() {
-  // Masquer la carte globale et le menu
+let planMap = null;
+let zonesLayer = null;
+
+// Fonction afficher plan aéroport
+function showAirportPlan(imagePath, width, height) {
+  // Cacher la carte globale et menu
   document.getElementById("map").style.display = "none";
   document.getElementById("menu").style.display = "none";
+  // Afficher la div plan aéroport
+  document.getElementById("airportPlan").style.display = "block";
 
-  // Afficher le plan de l'aéroport
-  const planDiv = document.getElementById("airportPlan");
-  planDiv.style.display = "block";
-
-  // Supprimer l'ancienne carte si existante
+  // Supprimer ancienne carte plan si existante
   if (planMap) {
     planMap.remove();
+    planMap = null;
   }
-
-  const imageWidth = 1962;
-  const imageHeight = 1652;
 
   planMap = L.map("airportPlanMap", {
     crs: L.CRS.Simple,
@@ -120,31 +114,52 @@ function showMadridPlan() {
     maxZoom: 4,
   });
 
-  const bounds = [[0, 0], [imageHeight, imageWidth]];
-  L.imageOverlay("mad.png", bounds).addTo(planMap);
+  const bounds = [[0, 0], [height, width]];
+  L.imageOverlay(imagePath, bounds).addTo(planMap);
   planMap.fitBounds(bounds);
 
-  // Charger les zones depuis le fichier JSON et afficher les marqueurs
-  fetch("MAD.json")
-    .then(res => res.json())
-    .then(zones => {
-      zones.forEach(zone => {
-        const centerY = zone.y + zone.height / 2;
-        const centerX = zone.x + zone.width / 2;
-        const marker = L.marker([centerY, centerX]).addTo(planMap);
+  // Créer le layerGroup pour zones (marqueurs)
+  zonesLayer = L.layerGroup().addTo(planMap);
+
+  // Charger zones depuis JSON (nom du fichier dépend de l'aéroport)
+  const jsonPath = imagePath.replace(".png", ".json");
+  fetch(jsonPath + "?v=" + Date.now())
+    .then((res) => res.json())
+    .then((zones) => {
+      zones.forEach((zone) => {
+        const marker = L.marker([zone.y, zone.x], { draggable: true });
         marker.bindPopup(zone.label);
+        zonesLayer.addLayer(marker);
       });
     })
-    .catch(() => console.warn("Impossible de charger les zones."));
+    .catch(() => console.warn(`Impossible de charger les zones depuis ${jsonPath}.`));
 }
 
-// Bouton ouvrir plan aéroport
-document.getElementById("openMadrid").addEventListener("click", (e) => {
-  e.preventDefault();
-  showMadridPlan();
-});
+// Gestion clic dans popup aéroport
+function attachPopupClick(marker, imagePath, width, height) {
+  marker.on("popupopen", () => {
+    const popupContent = marker.getPopup().getContent();
+    const matches = popupContent.match(/data-airport="(\w+)"/);
+    if (!matches) return;
+    const airportCode = matches[1];
+    const link = document.querySelector(`.openAirport[data-airport="${airportCode}"]`);
+    if (link) {
+      if (link._clickHandler) {
+        link.removeEventListener("click", link._clickHandler);
+      }
+      link._clickHandler = (e) => {
+        e.preventDefault();
+        showAirportPlan(imagePath, width, height);
+      };
+      link.addEventListener("click", link._clickHandler);
+    }
+  });
+}
 
-// Bouton retour depuis plan aéroport vers carte globale
+attachPopupClick(madridMarker, "mad.png", 1962, 1652);
+attachPopupClick(parisMarker, "cdg.png", 2000, 2000);
+
+// Bouton retour au plan global
 document.getElementById("backBtn").addEventListener("click", () => {
   if (planMap) {
     planMap.remove();

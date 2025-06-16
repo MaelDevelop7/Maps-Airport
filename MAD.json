@@ -1,202 +1,152 @@
 [
   {
-    "id": "zone1",
-    "x": 203,
-    "y": 51,
-    "width": 37,
-    "height": 40,
-    "label": "Metro and Train stop T4"
+    "x": 355.572228,
+    "y": 1529.809539,
+    "label": "Train T4S"
   },
   {
-    "id": "zone2",
-    "x": 247,
-    "y": 58,
-    "width": 42,
-    "height": 38,
-    "label": "Food T4 S"
+    "x": 427.594799,
+    "y": 1535.812498,
+    "label": "Food T4S"
   },
   {
-    "id": "zone3",
-    "x": 233,
-    "y": 274,
-    "width": 41,
-    "height": 42,
-    "label": "Train and metro T4"
+    "x": 411.589783,
+    "y": 1187.640906,
+    "label": "Metro T4"
   },
   {
-    "id": "zone4",
-    "x": 213,
-    "y": 335,
-    "width": 40,
-    "height": 32,
-    "label": "Security check T4"
+    "x": 385.581633,
+    "y": 1073.584695,
+    "label": "Control T4"
   },
   {
-    "id": "zone5",
-    "x": 260,
-    "y": 335,
-    "width": 43,
-    "height": 31,
+    "x": 457.604204,
+    "y": 1085.590612,
     "label": "Food T4"
   },
   {
-    "id": "zone6",
-    "x": 184,
-    "y": 386,
-    "width": 164,
-    "height": 41,
-    "label": "Entrance T4"
+    "x": 441.599188,
+    "y": 993.545249,
+    "label": "Drop off T4"
   },
   {
-    "id": "zone7",
-    "x": 34,
-    "y": 353,
-    "width": 38,
-    "height": 39,
-    "label": "Parking T4"
+    "x": 329.564077,
+    "y": 995.546235,
+    "label": "Bus T4"
   },
   {
-    "id": "zone8",
-    "x": 222,
-    "y": 677,
-    "width": 42,
-    "height": 38,
-    "label": "Security check T3"
+    "x": 397.899057,
+    "y": 505.883633,
+    "label": "Control T3"
   },
   {
-    "id": "zone9",
-    "x": 289,
-    "y": 798,
-    "width": 45,
-    "height": 40,
-    "label": "Parking T3"
-  },
-  {
-    "id": "zone10",
-    "x": 274,
-    "y": 662,
-    "width": 42,
-    "height": 40,
-    "label": "Bus Stop T3"
-  },
-  {
-    "id": "zone11",
-    "x": 222,
-    "y": 631,
-    "width": 43,
-    "height": 40,
+    "x": 387.523951,
+    "y": 605.502844,
     "label": "Food T3"
   },
   {
-    "id": "zone12",
-    "x": 420,
-    "y": 531,
-    "width": 44,
-    "height": 43,
-    "label": "Security check T2"
+    "x": 483.554046,
+    "y": 509.455508,
+    "label": "Bus T3"
   },
   {
-    "id": "zone13",
-    "x": 397,
-    "y": 577,
-    "width": 95,
-    "height": 39,
-    "label": "Transportation T2"
+    "x": 723.629283,
+    "y": 757.577792,
+    "label": "Control T2"
   },
   {
-    "id": "zone14",
-    "x": 397,
-    "y": 623,
-    "width": 116,
-    "height": 39,
-    "label": "Entrance T2"
+    "x": 679.615489,
+    "y": 681.540318,
+    "label": "Metro T2"
   },
   {
-    "id": "zone15",
-    "x": 577,
-    "y": 555,
-    "width": 41,
-    "height": 36,
-    "label": "Food T2"
+    "x": 757.639941,
+    "y": 683.541304,
+    "label": "Bus T2"
   },
   {
-    "id": "zone16",
-    "x": 430,
-    "y": 737,
-    "width": 161,
-    "height": 34,
+    "x": 719.628029,
+    "y": 607.50383,
+    "label": "Drop off T2"
+  },
+  {
+    "x": 517.564704,
+    "y": 331.36774,
     "label": "Parking T2"
   },
   {
-    "id": "zone17",
-    "x": 675,
-    "y": 647,
-    "width": 42,
-    "height": 38,
-    "label": "Car renting"
+    "x": 737.633671,
+    "y": 417.410145,
+    "label": "Parking T2"
   },
   {
-    "id": "zone18",
-    "x": 753,
-    "y": 669,
-    "width": 117,
-    "height": 38,
-    "label": "Entrance T1"
+    "x": 941.697623,
+    "y": 433.418034,
+    "label": "Parking 1"
   },
   {
-    "id": "zone19",
-    "x": 758,
-    "y": 627,
-    "width": 41,
-    "height": 36,
-    "label": "Bus stop T1"
+    "x": 1227.78728,
+    "y": 433.418034,
+    "label": "Parking T1"
   },
   {
-    "id": "zone20",
-    "x": 718,
-    "y": 567,
-    "width": 40,
-    "height": 41,
-    "label": "Security check T1"
+    "x": 1731.945277,
+    "y": 95.251374,
+    "label": "Parking T1"
   },
   {
-    "id": "zone21",
-    "x": 793,
-    "y": 577,
-    "width": 41,
-    "height": 41,
-    "label": "Food 1 T1"
+    "x": 1715.940261,
+    "y": 183.294765,
+    "label": "Control T1"
   },
   {
-    "id": "zone22",
-    "x": 734,
-    "y": 731,
-    "width": 42,
-    "height": 40,
-    "label": "Parking 2 T1"
+    "x": 1647.918944,
+    "y": 177.291806,
+    "label": "Bus T1"
   },
   {
-    "id": "zone23",
-    "x": 869,
-    "y": 886,
-    "width": 163,
-    "height": 41,
-    "label": "Main T1 Entrance"
+    "x": 1533.883207,
+    "y": 175.29082,
+    "label": "Drop off T1"
   },
   {
-    "id": "zone24",
-    "x": 1035,
-    "y": 887,
-    "width": 42,
-    "height": 40,
-    "label": "Security check T1"
+    "x": 1267.799819,
+    "y": 599.499886,
+    "label": "Bus T1"
   },
   {
-    "id": "zone25",
-    "x": 1036,
-    "y": 929,
-    "width": 41,
-    "height": 40,
-    "label": "Main Parking T1"
+    "x": 1333.820509,
+    "y": 509.455508,
+    "label": "Drop off T1"
+  },
+  {
+    "x": 1129.756558,
+    "y": 565.483121,
+    "label": "Car renting T1"
+  },
+  {
+    "x": 1205.780383,
+    "y": 701.55018,
+    "label": "Control T1"
+  },
+  {
+    "x": 1333.820509,
+    "y": 691.545249,
+    "label": "Food T1"
+  },
+  {
+    "x": 1627.912674,
+    "y": 291.348017,
+    "label": "Food T1"
+  },
+  {
+    "x": 981.710162,
+    "y": 719.559055,
+    "label": "Food T2"
+  },
+  {
+    "x": 83.428651,
+    "y": 1051.722757,
+    "label": "Parking T4"
   }
 ]
