@@ -9,7 +9,7 @@
   "display_override": ["windows-controls-overlay"],
   "icons": [
     {
-      "src": "/app-icon.png",
+      "src": "app-icon.png",
       "sizes": "192x192",
       "type": "image/png"
     }   
