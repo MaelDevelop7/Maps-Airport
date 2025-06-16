@@ -156,8 +156,8 @@ function attachPopupClick(marker, imagePath, width, height) {
   });
 }
 
-attachPopupClick(madridMarker, "mad.png", 1962, 1652);
-attachPopupClick(parisMarker, "cdg.png", 2000, 2000);
+attachPopupClick(madridMarker, "mad.json", 1962, 1652);
+attachPopupClick(parisMarker, "cdg.json", 2000, 2000);
 
 // Bouton retour au plan global
 document.getElementById("backBtn").addEventListener("click", () => {
