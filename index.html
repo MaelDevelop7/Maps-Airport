@@ -1,31 +1,80 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Maps Airport</title>
+  <title>✈️Maps Airport</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="app-icon.png">
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet/dist/leaflet.css"
-  />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
+
 <body>
+  <!-- Page d’accueil -->
+  <div id="homeScreen">
+    <div class="logo">✈️ Maps Airport</div>
+    <button id="enterBtn">Entrer</button>
+    <button id="settingsBtn">Paramètres</button>
+  </div>
+
+  <!-- Menu Paramètres -->
+  <div id="settingsMenu">
+    <div class="settings-card">
+      <h2>Paramètres</h2>
+      <select id="themeSelector">
+        <option value="auto">Automatique</option>
+        <option value="light">Clair</option>
+        <option value="dark">Sombre</option>
+      </select>
+      <button id="closeSettings">Fermer</button>
+    </div>
+  </div>
+
+  <!-- Carte principale -->
   <div id="map"></div>
 
+  <!-- Menu principal de la carte -->
   <div class="menu" id="menu">
     <a href="#" id="openMadrid">Madrid Airport (MAD)</a>
     <a href="#" id="recenterMap">Relocalize</a>
+    <a href="#" id="returnHome">Accueil</a>
   </div>
 
+  <!-- Plan de l’aéroport -->
   <div id="airportPlan">
     <button id="backBtn">Back</button>
     <div id="airportPlanMap"></div>
   </div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Gère l'affichage de la page d'accueil
+    document.getElementById("enterBtn").addEventListener("click", () => {
+      document.getElementById("homeScreen").style.display = "none";
+      document.getElementById("map").style.display = "block";
+      document.getElementById("menu").style.display = "block";
+    });
+
+    // Gère l'ouverture et fermeture des paramètres
+    document.getElementById("settingsBtn").addEventListener("click", () => {
+      document.getElementById("settingsMenu").style.display = "flex";
+    });
+
+    document.getElementById("closeSettings").addEventListener("click", () => {
+      document.getElementById("settingsMenu").style.display = "none";
+    });
+
+    // Retour à l'accueil depuis la carte
+    document.getElementById("returnHome").addEventListener("click", () => {
+      document.getElementById("map").style.display = "none";
+      document.getElementById("menu").style.display = "none";
+      document.getElementById("airportPlan").style.display = "none";
+      document.getElementById("homeScreen").style.display = "flex";
+    });
+  </script>
   <script src="app.js"></script>
-  <script src="dev.js"></script>
+  <script src="SystemListener.js"></script>
 </body>
+
 </html>

@@ -1,20 +1,84 @@
-html, body {
+/* Style global */
+body, html {
   margin: 0;
   padding: 0;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   overflow: hidden;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
-#map, #airportPlan {
+/* Mode sombre */
+.dark-mode body, .dark-mode html {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+.dark-mode #homeScreen {
+  background: linear-gradient(to bottom right, #2c2c2c, #1e1e1e);
+}
+
+.dark-mode .logo {
+  color: #90caf9;
+}
+
+.dark-mode #homeScreen button,
+.dark-mode .settings-card button {
+  background: #2196f3;
+}
+
+.dark-mode #homeScreen button:hover,
+.dark-mode .settings-card button:hover {
+  background: #1976d2;
+}
+
+.dark-mode #settingsMenu {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.dark-mode .settings-card {
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.dark-mode .settings-card h2 {
+  color: #e0e0e0;
+}
+
+.dark-mode .menu {
+  background: rgba(33, 33, 33, 0.95);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.dark-mode .menu a {
+  color: #90caf9;
+}
+
+.dark-mode #backBtn {
+  background: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #555;
+}
+
+.dark-mode #backBtn:hover {
+  background: #333;
+}
+
+/* Carte principale */
+#map {
   width: 100%;
   height: 100vh;
-  position: relative;
 }
 
+/* Plan de l'aéroport */
 #airportPlan {
   display: none;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: #fff;
 }
 
 #airportPlanMap {
@@ -24,36 +88,130 @@ html, body {
 
 #backBtn {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 80px;
+  left: 16px;
   z-index: 1000;
   padding: 8px 16px;
-  background: white;
+  background: #fff;
   border: 1px solid #ccc;
   cursor: pointer;
-  border-radius: 4px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  border-radius: 6px;
   font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background 0.3s;
 }
 
+#backBtn:hover {
+  background: #f0f0f0;
+}
+
+/* Menu principal */
 .menu {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 10px;
+  right: 10px;
   z-index: 1100;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 12px 16px;
-  border-radius: 6px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.95);
+  padding: 10px 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .menu a {
-  color: #0078ff;
+  color: #1a73e8;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 14px;
 }
 
 .menu a:hover {
   text-decoration: underline;
+}
+
+/* Accueil */
+#homeScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: 1.2rem;
+  background: linear-gradient(to bottom right, #f1f3f4, #d2e3fc);
+  text-align: center;
+  padding: 1rem;
+}
+
+.logo {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a73e8;
+}
+
+#homeScreen button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: #1a73e8;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#homeScreen button:hover {
+  background: #0f5ae0;
+}
+
+/* Menu paramètres */
+#settingsMenu {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.settings-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  min-width: 280px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+}
+
+.settings-card h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.settings-card label {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.settings-card button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #1a73e8;
+  color: white;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.3s;
+}
+
+.settings-card button:hover {
+  background: #0f5ae0;
 }
