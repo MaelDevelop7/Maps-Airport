@@ -1,75 +1,15 @@
-<!DOCTYPE html>
-<html lang="fr">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/app-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="/manifest.json">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>✈️Maps Airport</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="apple-touch-icon" href="app-icon.png" />
-  <link rel="icon" href="app-icon.png">
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
-</head>
-
-<body>
-  <!-- Page d’accueil -->
-  <div id="homeScreen">
-    <div class="logo">✈️ Maps Airport</div>
-    <button id="enterBtn">Entrer</button>
-    <button id="settingsBtn">Paramètres</button>
-  </div>
-
-  <!-- Menu Paramètres -->
-  <div id="settingsMenu">
-    <div class="settings-card">
-      <h2>Paramètres</h2>
-      <select id="themeSelector">
-        <option value="auto">Automatique</option>
-        <option value="light">Clair</option>
-        <option value="dark">Sombre</option>
-      </select>
-      <button id="closeSettings">Fermer</button>
-    </div>
-  </div>
-
-  <!-- Carte principale -->
-  <div id="map"></div>
-
-  <!-- Menu principal de la carte -->
-  <div class="menu" id="menu">
-    <a href="#" id="recenterMap">Relocalize</a>
-    <a href="#" id="returnHome">Accueil</a>
-  </div>
-
-<div id="airportPlan" style="display:none;">
-  <div id="airportPlanMap"></div>
-  
-  <button id="backBtn">Retour</button>
-</div>
-
-
-
-
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <!-- Leaflet.draw JS -->
-<script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
-  <script>
-  if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(registration => {
-        console.log('Service Worker enregistré avec succès:', registration.scope);
-      })
-      .catch(error => {
-        console.error('Erreur lors de l\'enregistrement du Service Worker:', error);
-      });
-  });
-}
-</script>
-  <script src="app.js"></script>
-  <script src="SystemListener.js"></script>
-</body>
-
+    <title>Maps Airport</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

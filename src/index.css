@@ -1,0 +1,271 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #e3f2fd;
+  color: #222;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Page d'accueil */
+#homeScreen {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centré verticalement */
+  align-items: center;     /* Centré horizontalement */
+  text-align: center;
+  background: linear-gradient(to bottom, #e3f2fd, #90caf9);
+  padding: 2rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #0d47a1;
+  transition: color 0.3s ease;
+}
+
+/* Boutons */
+#homeScreen button {
+  margin: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #1976d2;
+  color: white;
+  transition: background-color 0.2s ease-in-out, color 0.3s ease;
+}
+
+#homeScreen button:hover {
+  background-color: #1565c0;
+}
+
+/* Menu paramètres */
+#settingsMenu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.settings-card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  min-width: 250px;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.settings-card select,
+.settings-card button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Carte et menu */
+#map, #airportPlanMap {
+  width: 100%;
+  height: 100vh;
+}
+
+.menu {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.menu a {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.menu a:hover {
+  text-decoration: underline;
+}
+
+/* Bouton retour */
+#airportPlan button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 10px 15px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==== Thème clair ==== */
+html.light-mode,
+html.light-mode body,
+html.light-mode #root {
+  background-color: #fff !important;
+  color: #222 !important;
+}
+
+html.light-mode #homeScreen {
+  background: linear-gradient(to bottom, #e3f2fd, #90caf9);
+}
+
+html.light-mode .logo {
+  color: #0d47a1;
+}
+
+html.light-mode button,
+html.light-mode select,
+html.light-mode .menu,
+html.light-mode #homeScreen,
+html.light-mode .settings-card {
+  background-color: #fff;
+  color: #222;
+  border-color: #ccc;
+}
+
+/* ==== Thème sombre ==== */
+html.dark-mode,
+html.dark-mode body,
+html.dark-mode #root {
+  background-color: #121212 !important;
+  color: #eee !important;
+}
+
+html.dark-mode #homeScreen {
+  background: linear-gradient(to bottom, #222, #111);
+}
+
+html.dark-mode .logo {
+  color: #90caf9;
+}
+
+html.dark-mode button,
+html.dark-mode select,
+html.dark-mode .menu,
+html.dark-mode #homeScreen,
+html.dark-mode .settings-card {
+  background-color: #222;
+  color: #eee;
+  border-color: #444;
+}
+
+html.dark-mode #homeScreen button:hover {
+  background-color: #555;
+}
+
+html.dark-mode .menu a {
+  color: #90caf9;
+}
+
+html.dark-mode .menu a:hover {
+  text-decoration: underline;
+  color: #bbdefb;
+}
+/* Thème automatique via préférence système */
+@media (prefers-color-scheme: dark) {
+  html:not(.light-mode):not(.dark-mode),
+  body:not(.light-mode):not(.dark-mode),
+  #root:not(.light-mode):not(.dark-mode) {
+    background-color: #121212 !important;
+    color: #eee !important;
+  }
+
+  html:not(.light-mode):not(.dark-mode) #homeScreen {
+    background: linear-gradient(to bottom, #222, #111);
+  }
+
+  html:not(.light-mode):not(.dark-mode) .logo {
+    color: #90caf9;
+  }
+
+  html:not(.light-mode):not(.dark-mode) button,
+  html:not(.light-mode):not(.dark-mode) select,
+  html:not(.light-mode):not(.dark-mode) .menu,
+  html:not(.light-mode):not(.dark-mode) #homeScreen,
+  html:not(.light-mode):not(.dark-mode) .settings-card {
+    background-color: #222;
+    color: #eee;
+    border-color: #444;
+  }
+
+  html:not(.light-mode):not(.dark-mode) #homeScreen button:hover {
+    background-color: #555;
+  }
+
+  html:not(.light-mode):not(.dark-mode) .menu a {
+    color: #90caf9;
+  }
+
+  html:not(.light-mode):not(.dark-mode) .menu a:hover {
+    color: #bbdefb;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html:not(.light-mode):not(.dark-mode),
+  body:not(.light-mode):not(.dark-mode),
+  #root:not(.light-mode):not(.dark-mode) {
+    background-color: #fff !important;
+    color: #222 !important;
+  }
+
+  html:not(.light-mode):not(.dark-mode) #homeScreen {
+    background: linear-gradient(to bottom, #e3f2fd, #90caf9);
+  }
+
+  html:not(.light-mode):not(.dark-mode) .logo {
+    color: #0d47a1;
+  }
+
+  html:not(.light-mode):not(.dark-mode) button,
+  html:not(.light-mode):not(.dark-mode) select,
+  html:not(.light-mode):not(.dark-mode) .menu,
+  html:not(.light-mode):not(.dark-mode) #homeScreen,
+  html:not(.light-mode):not(.dark-mode) .settings-card {
+    background-color: #fff;
+    color: #222;
+    border-color: #ccc;
+  }
+
+  html:not(.light-mode):not(.dark-mode) .menu a {
+    color: #1976d2;
+  }
+
+  html:not(.light-mode):not(.dark-mode) .menu a:hover {
+    color: #1565c0;
+  }
+}
